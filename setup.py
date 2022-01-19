@@ -6,6 +6,7 @@ __version__ = "0.1"
 setup(
     name="ugy_webmin",
     version=__version__,
+    platforms=['any'],
     packages=find_packages(exclude=["tests"]),
     install_requires=[
         "flask",

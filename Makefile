@@ -1,4 +1,8 @@
-.PHONY: init init-migration build run db-migrate test tox
+.PHONY: init init-migration build run db-migrate test tox clean deploy
+
+clean:
+	rm -rf build
+	rm -rf dist
 
 init:  build run
 	docker-compose exec web flask db init
@@ -7,8 +11,11 @@ init:  build run
 	docker-compose exec web flask init
 	@echo "Init done, containers running"
 
-build:
-	docker-compose build
+build:  clean
+	python setup.py bdist_wheel
+
+deploy: $(wildcard dist/*.whl)
+	scp $? root@urbangirlyarns.site:/root/incoming
 
 run:
 	@mkdir -p db
@@ -28,6 +35,3 @@ test:
 
 tox:
 	docker-compose run -v $(PWD)/tests:/code/tests:ro web tox -e py38
-
-lint:
-	docker-compose run web tox -e lint

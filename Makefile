@@ -12,7 +12,7 @@ init:  build run
 	@echo "Init done, containers running"
 
 build:  clean
-	python setup.py bdist_wheel
+	python3 -m build --wheel
 
 deploy: $(wildcard dist/*.whl)
 	scp $? root@urbangirlyarns.site:/root/incoming

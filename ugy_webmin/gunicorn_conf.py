@@ -4,14 +4,14 @@ from pathlib import Path
 from typing import Dict
 
 config = {
-    "bind": "unix:/tmp/socket.sock",
+    "bind": "'unix:/tmp/socket.sock'",
     "backlog": 1024,
     "workers": 2,
     "worker_connections": 500,
     "timeout": 30,
     "keepalive": 2,
-    "wsgi_app": "ugy_webmin.wsgi:app",
-    "user": "www-data",
+    "wsgi_app": "'ugy_webmin.wsgi:app'",
+    "user": "'www-data'",
 }
 
 
@@ -22,7 +22,6 @@ class ConfigWriter:
         with conf_path.open(mode="w") as fh:
             for key, val in config.items():
                 fh.write(f"{key}={val}\n")
-
 
 
 @click.command(
@@ -47,6 +46,7 @@ def main(ctx, out_dir):
     ConfigWriter.write(conf_path, config)
 
     click.echo(f"Wrote config file to {conf_path}")
+
 
 if __name__ == "__main__":
     main()

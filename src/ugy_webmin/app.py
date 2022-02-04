@@ -1,11 +1,10 @@
 from flask import Flask
-from ugy_webmin import api
-from ugy_webmin import auth
-from ugy_webmin import manage
-from ugy_webmin.extensions import apispec
-from ugy_webmin.extensions import db
-from ugy_webmin.extensions import jwt
-from ugy_webmin.extensions import migrate
+
+# from flask.ext.admin.contrib.sqla import ModelView
+from flask_admin import Admin
+
+from ugy_webmin import api, auth, manage
+from ugy_webmin.extensions import apispec, db, jwt, migrate
 
 
 def create_app(testing=False):
@@ -20,8 +19,13 @@ def create_app(testing=False):
     configure_cli(app)
     configure_apispec(app)
     register_blueprints(app)
-
+    configure_flask_admin(app)
     return app
+
+
+def configure_flask_admin(app):
+
+    admin = Admin(app, template_mode="bootstrap3")
 
 
 def configure_extensions(app):

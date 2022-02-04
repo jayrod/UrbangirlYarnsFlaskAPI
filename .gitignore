@@ -91,3 +91,6 @@ ENV/
 .ropeproject
 
 .vscode/
+
+# Test Db
+ugy_webmin.db
